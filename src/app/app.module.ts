@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SessionComponent } from './session/session.component';
 import { ExchangeTypeComponent } from './exchange-type/exchange-type.component';
 import { ExchangeHistoryComponent } from './exchange-history/exchange-history.component';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -23,9 +24,13 @@ import { ExchangeHistoryComponent } from './exchange-history/exchange-history.co
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
   ],
-  providers: [],
+  providers: [
+    {provide:JWT_OPTIONS, useValue:JWT_OPTIONS},
+    JwtHelperService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

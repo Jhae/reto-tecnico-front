@@ -1,9 +1,20 @@
 <div>
-  <form [formGroup]="authForm">
+  <form *ngIf="!authService.appUser.isSessionActive"  [formGroup]="authForm">
     <input type="text" formControlName="username" name="username">
     <input type="password" formControlName="password" name="password">
     <button (click)="doLogin()">Log in</button>
   </form>
 
   {{authForm.valid| json}}
+  {{ appUser | json}}
+</div>
+
+<div *ngIf="authService.appUser.isSessionActive">
+  <div><span>{{ authService.appUser.username }}</span></div>
+  <div><span>{{ authService.appUser.roles.join(', ') }}</span></div>
+  <button (click)="doLogOut()">Cerrar Sesión</button>
+
+
+  {{authForm.valid| json}}
+  {{ appUser | json}}
 </div>

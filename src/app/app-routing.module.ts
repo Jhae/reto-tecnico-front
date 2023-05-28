@@ -4,9 +4,10 @@ import { ExchangeTypeComponent } from './exchange-type/exchange-type.component';
 import { ExchangeHistoryComponent } from './exchange-history/exchange-history.component';
 
 const routes: Routes = [
-  {path:'', redirectTo:'/exchange-types',pathMatch:'full'},
+  {path:'', redirectTo:'exchange-type',pathMatch:'full'},
   {path:'exchange-type', component: ExchangeTypeComponent, pathMatch:'full'},
   {path:'exchange-history', component: ExchangeHistoryComponent, pathMatch:'full'},
+  {path:'**',redirectTo:'exchange-type', pathMatch:'full'},
 
 ];
 

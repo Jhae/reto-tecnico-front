@@ -14,9 +14,41 @@
           <td>{{exchangeType?.originCurrency?.name ?? '-'}}</td>
           <td>{{exchangeType?.rate}}</td>
           <td>{{exchangeType?.destinyCurrency?.name ?? '-'}}</td>
+          <td><button (click)="prepareEditExchangeType(exchangeType.id)">Editar</button></td>
+          <td><button (click)="removeExchangeType(exchangeType.id)">Eliminar</button></td>
         </tr>
       </tbody>
     </tr>
   </thead>
-
 </table>
+
+<div *ngIf="displayEditExchange">
+  <form [formGroup]="editForm">
+    <input type="hidden" formControlName="id">
+    <span>origen</span>
+    <div>{{exchangeTypeToEdit.originCurrency.name}}</div>
+
+    <label for="">Tasa: </label>
+    <input type="number" formControlName="rate">
+
+    <span>destino</span>
+    <div>{{exchangeTypeToEdit.destinyCurrency.name}}</div>
+    <button (click)="updateExchangeType()">Actualzar</button>
+    <button (click)="cancelExchangeType()">Cancelar</button>
+  </form>
+</div>
+
+<div *ngIf="displayCreateExchange">
+  <form [formGroup]="createForm">
+    <input type="hidden" formControlName="id">
+    <span>origen</span>
+    <div>{{exchangeTypeToEdit.originCurrency.name}}</div>
+
+    <label for="">Tasa: </label>
+    <input type="number" formControlName="rate">
+
+    <span>destino</span>
+    <div>{{exchangeTypeToEdit.destinyCurrency.name}}</div>
+    <button (click)="updateExchangeType()">Actualzar</button>
+  </form>
+</div>
