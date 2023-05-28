@@ -1,0 +1,22 @@
+<h3>TIPOS DE CAMBIOS DISPONIBLES</h3>
+<table>
+  <thead>
+    <tr>
+      <thead>
+        <th>id</th>
+        <th>tasa</th>
+        <th>origen</th>
+        <th>destino</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let exchangeType of exchangeTypes">
+          <td>{{exchangeType?.id}}</td>
+          <td>{{exchangeType?.originCurrency?.name ?? '-'}}</td>
+          <td>{{exchangeType?.rate}}</td>
+          <td>{{exchangeType?.destinyCurrency?.name ?? '-'}}</td>
+        </tr>
+      </tbody>
+    </tr>
+  </thead>
+
+</table>
