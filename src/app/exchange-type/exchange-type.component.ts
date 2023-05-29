@@ -1,8 +1,9 @@
-import { UpdateExchangeTypeRequest } from './../model/request/update-exchange-type-request';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ExchangeTypeResponse } from '../model/exchange-type-response';
 import { ExchangeTypeService } from './../service/exchange-type.service';
 import { Component } from '@angular/core';
+import { CurrencyService } from '../service/currency.service';
+import { GetCurrencyResponse } from '../model/response/get-currency-response';
 import { HttpResponse } from '@angular/common/http';
 
 @Component({
@@ -13,6 +14,8 @@ import { HttpResponse } from '@angular/common/http';
 export class ExchangeTypeComponent {
 
   exchangeTypes :ExchangeTypeResponse[]
+
+  currencies: GetCurrencyResponse[]
 
   // Edicion de tipo de cambio
   displayEditExchange = false
@@ -25,13 +28,23 @@ export class ExchangeTypeComponent {
   // Creacion de tipo de cambio
   displayCreateExchange = false
   createForm = this.formBuilder.group({
-    'id': ['',Validators.required],
-    'rate': ['',[Validators.required, Validators.min(0)]]
+    'originCurrencyId': ['',Validators.required],
+    'rate': ['',[Validators.required, Validators.min(0)]],
+    'destinyCurrencyId': ['',Validators.required],
+  })
+
+  // Realizacion de cambio de moneda
+  displayExchangeCurrency = false
+  exchangeTypeToUse : ExchangeTypeResponse
+  exchangeCurrencyForm = this.formBuilder.group({
+    'exchangeId': ['',[Validators.required]],
+    'originAmount': ['',Validators.required, Validators.min(0)],
   })
 
   constructor(
     private formBuilder: FormBuilder,
-    private exchangeTypeService: ExchangeTypeService
+    private exchangeTypeService: ExchangeTypeService,
+    private currencyService: CurrencyService
     ){ }
 
   ngOnInit(){
@@ -94,7 +107,68 @@ export class ExchangeTypeComponent {
                     this.loadExchangeTypes()
                   }
                 )
+  }
+
+  prepareCreateExchangeType() :void {
+    this.currencyService.getCurrencies()
+          .subscribe(
+              (response) => {
+                console.log("response");
+                console.log(response);
+
+
+                this.currencies = response;
+                this.currencies.forEach(currency => currency.countriesNames = currency.countries.map(country => country.name))
+                this.displayCreateExchange = true;
+            }
+          )
+  }
+  createExchangeType() :void {
+    let originCurrencyId = this.createForm.get('originCurrencyId')?.value?? ''
+    let rate = this.createForm.get('rate')?.value?? 0 as number
+    let destinyCurrencyId = this.createForm.get('destinyCurrencyId')?.value?? ''
+
+    let requestBody = {
+      originCurrency : originCurrencyId,
+      rate: rate,
+      destinyCurrency: destinyCurrencyId
+    }
+
+    this.exchangeTypeService.postExchangeType(requestBody)
+      .subscribe(
+        (response:HttpResponse<any>) => {
+          if( !response.ok )
+          {
+            return
+          }
+          // Volver a cargar los tipos de cambios
+          this.loadExchangeTypes()
+          // Ocultar modal para agregar cambio
+          this.displayCreateExchange = false
+        }
+      )
 
   }
 
+  prepareExchangeCurrency(id: string) :void {
+    //TODO
+    this.exchangeTypeToUse = this.exchangeTypes.find(
+        exchType => exchType.id === id
+      ) ?? new ExchangeTypeResponse
+
+    this.displayExchangeCurrency = true
+  }
+
+  cancelExchangeCurrency() :void {
+    this.exchangeTypeToUse = new ExchangeTypeResponse;
+    this.displayExchangeCurrency = false
+  }
+
+  exchangeCurrency() :void {
+    let exchangeId = this.exchangeCurrencyForm.controls.exchangeId
+    let originAmount = this.exchangeCurrencyForm.controls.originAmount
+
+    let requestBody = {exchangeId, originAmount}
+    this.exchangeTypeService.postExchangeType(requestBody)
+  }
 }
