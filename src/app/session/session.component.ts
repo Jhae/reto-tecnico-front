@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-session',
@@ -19,6 +20,7 @@ export class SessionComponent {
   constructor(
     private builder: FormBuilder,
     public authService: AuthService,
+    private router: Router
     ){}
 
 
@@ -32,6 +34,7 @@ export class SessionComponent {
 
   doLogOut() :void{
     this.authService.logOut()
+    this.router.navigate(['/'])
   }
 
 

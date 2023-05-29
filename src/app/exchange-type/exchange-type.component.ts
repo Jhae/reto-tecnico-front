@@ -76,6 +76,8 @@ export class ExchangeTypeComponent {
 
           // Volver a cargar los tipos de cambios
           this.loadExchangeTypes()
+          // Ocultar modal de edicion
+          this.displayEditExchange = false
         }
       )
   }

@@ -1,7 +1,7 @@
 export class AppUser {
 
   username :string
-  roles: string[]
+  roles: string[] = []
 
   isSessionActive:boolean
 
