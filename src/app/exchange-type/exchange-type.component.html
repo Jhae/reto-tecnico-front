@@ -22,8 +22,13 @@
 </div>
 
 <div *ngIf="displayExchangeCurrency">
-  <form [formGroup]="exchangeCurrencyForm">
-
+  <form [formGroup]="exchangeCurrencyForm" style="text-align: center;">
+    <p> <span> Cambio de ({{ exchgTypeToUse.originCurrency.countriesNames.join(', ') }}) {{ exchgTypeToUse.originCurrency.name }} a ({{ exchgTypeToUse.destinyCurrency.countriesNames.join(', ') }}) {{ exchgTypeToUse.destinyCurrency.name }} </span></p>
+    <p> <span> {{ exchgTypeToUse.rate }} </span> </p>
+    <input type="hidden" formControlName="exchangeId">
+    <label for="">Ingrese monto: </label>
+    <input type="number" formControlName="originAmount">
+    <button (click)="exchangeCurrency()"> - Cambiar - </button>
   </form>
 </div>
 
@@ -42,7 +47,7 @@
           <td>{{exchangeType?.originCurrency?.name ?? '-'}}</td>
           <td>{{exchangeType?.rate}}</td>
           <td>{{exchangeType?.destinyCurrency?.name ?? '-'}}</td>
-          <td><button (click)="prepareExchangeCurrency(exchangeType.id)">Editar</button></td>
+          <td><button (click)="prepareExchangeCurrency(exchangeType.id)">Cambiar moneda</button></td>
           <td><button (click)="prepareEditExchangeType(exchangeType.id)">Editar</button></td>
           <td><button (click)="removeExchangeType(exchangeType.id)">Eliminar</button></td>
         </tr>

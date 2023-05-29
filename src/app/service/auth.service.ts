@@ -20,7 +20,7 @@ export class AuthService {
     ) { }
 
   getLocalToken() :string {
-    return localStorage.getItem('access_token')?? ''
+    return localStorage.getItem("access_token")?? ''
   }
 
   logIn(username :string, password :string): void

@@ -1,3 +1,4 @@
+import { ExchangeHistoryService } from './../service/exchange-history.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ExchangeTypeResponse } from '../model/exchange-type-response';
 import { ExchangeTypeService } from './../service/exchange-type.service';
@@ -35,15 +36,16 @@ export class ExchangeTypeComponent {
 
   // Realizacion de cambio de moneda
   displayExchangeCurrency = false
-  exchangeTypeToUse : ExchangeTypeResponse
+  exchgTypeToUse : ExchangeTypeResponse
   exchangeCurrencyForm = this.formBuilder.group({
     'exchangeId': ['',[Validators.required]],
-    'originAmount': ['',Validators.required, Validators.min(0)],
+    'originAmount': ['',[Validators.required, Validators.min(0)]],
   })
 
   constructor(
     private formBuilder: FormBuilder,
     private exchangeTypeService: ExchangeTypeService,
+    private exchangeHistoryService: ExchangeHistoryService,
     private currencyService: CurrencyService
     ){ }
 
@@ -147,28 +149,45 @@ export class ExchangeTypeComponent {
           this.displayCreateExchange = false
         }
       )
-
   }
 
   prepareExchangeCurrency(id: string) :void {
     //TODO
-    this.exchangeTypeToUse = this.exchangeTypes.find(
+    this.exchgTypeToUse = this.exchangeTypes.find(
         exchType => exchType.id === id
       ) ?? new ExchangeTypeResponse
+    this.exchangeCurrencyForm.controls['exchangeId'].setValue(this.exchgTypeToUse.id)
+
+    const originCountries = this.exchgTypeToUse.originCurrency.countries
+    this.exchgTypeToUse.originCurrency.countriesNames = originCountries.map(oCountry => oCountry.name)
+    console.log(this.exchgTypeToUse.originCurrency.countriesNames);
+
+
+    const destinyCountries = this.exchgTypeToUse.destinyCurrency.countries
+    this.exchgTypeToUse.destinyCurrency.countriesNames = destinyCountries.map(dCountry => dCountry.name)
 
     this.displayExchangeCurrency = true
   }
 
   cancelExchangeCurrency() :void {
-    this.exchangeTypeToUse = new ExchangeTypeResponse;
+    this.exchgTypeToUse = new ExchangeTypeResponse;
     this.displayExchangeCurrency = false
   }
 
   exchangeCurrency() :void {
-    let exchangeId = this.exchangeCurrencyForm.controls.exchangeId
-    let originAmount = this.exchangeCurrencyForm.controls.originAmount
+    let exchangeId = this.exchangeCurrencyForm.get('exchangeId')?.value
+    let originAmount = this.exchangeCurrencyForm.get('originAmount')?.value
 
     let requestBody = {exchangeId, originAmount}
-    this.exchangeTypeService.postExchangeType(requestBody)
+    this.exchangeHistoryService.makeCurrencyExchange(requestBody)
+      .subscribe(
+        (response:HttpResponse<any>) => {
+          if(!response.ok )
+          {
+            return
+          }
+          this.exchgTypeToUse = new ExchangeTypeResponse
+        }
+      )
   }
 }

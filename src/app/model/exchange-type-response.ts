@@ -9,6 +9,7 @@ class Currency{
   id: string
   name: string
   countries: Country[]
+  countriesNames: string[]
 }
 
 class Country{
