@@ -1,3 +1,4 @@
+import { ROLES } from './../util/roles-const';
 import { AuthService } from './../service/auth.service';
 import { ExchangeHistoryService } from './../service/exchange-history.service';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -188,6 +189,7 @@ export class ExchangeTypeComponent {
           {
             return
           }
+          this.displayExchangeCurrency = false
           this.exchgTypeToUse = new ExchangeTypeResponse
         }
       )

@@ -10,8 +10,6 @@ import { Router } from '@angular/router';
 })
 export class SessionComponent {
 
-  appUser = this.authService.appUser
-
   authForm = this.builder.group({
       'username':['',[Validators.required, Validators.minLength(3)]]
       ,'password':['', [Validators.required, Validators.minLength(3)]]

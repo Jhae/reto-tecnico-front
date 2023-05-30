@@ -1,41 +1,42 @@
-<p>exchange-history works!</p>
-<h3>HISTORIAL DE CAMBIOS REALIZADOS</h3>
-<table>
-  <thead>
-    <tr>
-      <thead>
-        <th>id</th>
-        <th>origen</th>
-        <th>monto</th>
-        <th>tasa</th>
-        <th>monto</th>
-        <th>destino</th>
-        <th>fecha</th>
-        <th>usuario</th>
-        <th>correo</th>
-        <th>nombre</th>
-        <th>apellidos</th>
-        <th>activo</th>
-        <th>roles</th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let exchangeHistory of exchangesHistory">
-          <td>{{ exchangeHistory.id }}</td>
-          <td>{{ exchangeHistory.originCurrency.name }}</td>
-          <td>{{ exchangeHistory.originAmount }}</td>
-          <td>{{ exchangeHistory.exchangeRate }}</td>
-          <td>{{ exchangeHistory.destinyAmount }}</td>
-          <td>{{ exchangeHistory.destinyCurrency.name }}</td>
-          <td>{{ exchangeHistory.operationDate }}</td>
-          <td>{{ exchangeHistory?.user?.username }}</td>
-          <td>{{ exchangeHistory?.user?.email }}</td>
-          <td>{{ exchangeHistory?.user?.name }}</td>
-          <td>{{ exchangeHistory?.user?.lastName }}</td>
-          <td>{{ exchangeHistory?.user?.enabled }}</td>
-          <td>{{ exchangeHistory?.user?.roles?.join(', ') }}</td>
-        </tr>
-      </tbody>
-    </tr>
-  </thead>
+<div>
+  <h3>HISTORIAL DE CAMBIOS REALIZADOS</h3>
+  <table>
+    <thead>
+      <tr>
+        <thead>
+          <th>id</th>
+          <th>origen</th>
+          <th>monto</th>
+          <th>tasa</th>
+          <th>monto</th>
+          <th>destino</th>
+          <th>fecha</th>
+          <th>usuario</th>
+          <th>correo</th>
+          <th>nombre</th>
+          <th>apellidos</th>
+          <th>activo</th>
+          <th>roles</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let exchangeHistory of exchangesHistory">
+            <td>{{ exchangeHistory.id }}</td>
+            <td>{{ exchangeHistory.originCurrency.name }}</td>
+            <td>{{ exchangeHistory.originAmount }}</td>
+            <td>{{ exchangeHistory.exchangeRate }}</td>
+            <td>{{ exchangeHistory.destinyAmount }}</td>
+            <td>{{ exchangeHistory.destinyCurrency.name }}</td>
+            <td>{{ exchangeHistory.operationDate | date }}</td>
+            <td>{{ exchangeHistory?.user?.username }}</td>
+            <td>{{ exchangeHistory?.user?.email }}</td>
+            <td>{{ exchangeHistory?.user?.name }}</td>
+            <td>{{ exchangeHistory?.user?.lastName }}</td>
+            <td>{{ exchangeHistory?.user?.enabled? 'Si': 'No' }}</td>
+            <td>{{ exchangeHistory?.user?.roles?.join(', ') }}</td>
+          </tr>
+        </tbody>
+      </tr>
+    </thead>
 
-</table>
+  </table>
+</div>

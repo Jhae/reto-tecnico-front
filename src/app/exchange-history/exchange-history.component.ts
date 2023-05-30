@@ -23,7 +23,7 @@ export class ExchangeHistoryComponent {
     this.exchangeHistoryService.getExchangeHistory()
       .subscribe(
         (response) => {
-          this.exchangesHistory = response
+          this.exchangesHistory = response.sort( (h1,h2) => (h2.operationDate as any) - (h1.operationDate as any))
         }
       )
   }

@@ -1,9 +1,9 @@
 <h3>TIPOS DE CAMBIOS DISPONIBLES</h3>
 
-<div><button (click)="prepareCreateExchangeType()">Agregar Tipo de Cambio</button></div>
+<div><button (click)="prepareCreateExchangeType()" *ngIf="authService.appUser.hasSession && authService.appUser.isAdmin()">Agregar Tipo de Cambio</button></div>
 
-<div *ngIf="displayCreateExchange">
-  <form [formGroup]="createForm">
+<div *ngIf="displayCreateExchange && authService.appUser.hasSession && authService.appUser.isAdmin()">
+  <form [formGroup]="createForm" >
     <label for="">Moneda Origen</label>
     <select name="originCurrency" id="" formControlName="originCurrencyId">
       <option *ngFor="let currency of currencies" value="{{ currency.id }}" >[{{ currency.countriesNames.join(', ') }}] {{ currency.name }}</option>
@@ -21,7 +21,7 @@
   </form>
 </div>
 
-<div *ngIf="displayExchangeCurrency">
+<div *ngIf="displayExchangeCurrency && authService.appUser.hasSession && authService.appUser.isUser()">
   <form [formGroup]="exchangeCurrencyForm" style="text-align: center;">
     <p> <span> Cambio de ({{ exchgTypeToUse.originCurrency.countriesNames.join(', ') }}) {{ exchgTypeToUse.originCurrency.name }} a ({{ exchgTypeToUse.destinyCurrency.countriesNames.join(', ') }}) {{ exchgTypeToUse.destinyCurrency.name }} </span></p>
     <p> <span> {{ exchgTypeToUse.rate }} </span> </p>
@@ -47,9 +47,9 @@
           <td>{{exchangeType?.originCurrency?.name ?? '-'}}</td>
           <td>{{exchangeType?.rate}}</td>
           <td>{{exchangeType?.destinyCurrency?.name ?? '-'}}</td>
-          <td *ngIf="authService.appUser.hasSession"><button (click)="prepareExchangeCurrency(exchangeType.id)">Cambiar moneda</button></td>
-          <td *ngIf="authService.appUser.hasSession"><button (click)="prepareEditExchangeType(exchangeType.id)">Editar</button></td>
-          <td *ngIf="authService.appUser.hasSession"><button (click)="removeExchangeType(exchangeType.id)">Eliminar</button></td>
+          <td *ngIf="authService.appUser.hasSession && authService.appUser.isUser()"><button (click)="prepareExchangeCurrency(exchangeType.id)">Cambiar moneda</button></td>
+          <td *ngIf="authService.appUser.hasSession && authService.appUser.isAdmin()"><button (click)="prepareEditExchangeType(exchangeType.id)">Editar</button></td>
+          <td *ngIf="authService.appUser.hasSession && authService.appUser.isAdmin()"><button (click)="removeExchangeType(exchangeType.id)">Eliminar</button></td>
         </tr>
       </tbody>
     </tr>
@@ -57,7 +57,7 @@
 </table>
 
 
-<div *ngIf="displayEditExchange">
+<div *ngIf="displayEditExchange && authService.appUser.hasSession && authService.appUser.isAdmin()">
   <form [formGroup]="editForm">
     <input type="hidden" formControlName="id">
     <span>origen</span>
