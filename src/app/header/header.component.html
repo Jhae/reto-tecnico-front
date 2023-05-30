@@ -1,16 +1,16 @@
-<div class="bg-green-700">
-  <div>
+<div class=" border-black grid grid-cols-12">
+  <div class="col-span-9">
 
-    <div>
-      <h1>Conversión de divisas </h1>
+    <div class="text-center text-5xl font-bold py-5">
+      <h1 class="">CAMBIO DE MONEDAS</h1>
     </div>
 
-    <ul>
-      <li><a routerLink="exchange-type" >Tipos de Cambios</a></li>
-      <li><a routerLink="exchange-history" >Auditoria</a></li>
+    <ul class="list-none">
+      <li routerLinkActive="bg-blue-500 text-white" class="inline-block h-5 p-7 font-bold hover:bg-blue-500 hover:text-white border-b-4 "><a routerLink="exchange-type"  >Tipos de Cambio</a></li>
+      <li routerLinkActive="bg-blue-500 text-white" class="inline-block h-5 p-7 font-bold hover:bg-blue-500 hover:text-white border-b-4 "><a routerLink="exchange-history"  >Auditoria</a></li>
     </ul>
 
   </div>
 
-  <app-session></app-session>
+  <app-session class="col-span-3 py-5" ></app-session>
 </div>

@@ -1,42 +1,38 @@
-<div>
-  <h3>HISTORIAL DE CAMBIOS REALIZADOS</h3>
-  <table>
-    <thead>
-      <tr>
-        <thead>
-          <th>id</th>
-          <th>origen</th>
-          <th>monto</th>
-          <th>tasa</th>
-          <th>monto</th>
-          <th>destino</th>
-          <th>fecha</th>
-          <th>usuario</th>
-          <th>correo</th>
-          <th>nombre</th>
-          <th>apellidos</th>
-          <th>activo</th>
-          <th>roles</th>
-        </thead>
-        <tbody>
-          <tr *ngFor="let exchangeHistory of exchangesHistory">
-            <td>{{ exchangeHistory.id }}</td>
-            <td>{{ exchangeHistory.originCurrency.name }}</td>
-            <td>{{ exchangeHistory.originAmount }}</td>
-            <td>{{ exchangeHistory.exchangeRate }}</td>
-            <td>{{ exchangeHistory.destinyAmount }}</td>
-            <td>{{ exchangeHistory.destinyCurrency.name }}</td>
-            <td>{{ exchangeHistory.operationDate | date }}</td>
-            <td>{{ exchangeHistory?.user?.username }}</td>
-            <td>{{ exchangeHistory?.user?.email }}</td>
-            <td>{{ exchangeHistory?.user?.name }}</td>
-            <td>{{ exchangeHistory?.user?.lastName }}</td>
-            <td>{{ exchangeHistory?.user?.enabled? 'Si': 'No' }}</td>
-            <td>{{ exchangeHistory?.user?.roles?.join(', ') }}</td>
-          </tr>
-        </tbody>
-      </tr>
+<div class="container mx-auto pt-5">
+  <h3 class="text-center font-bold text-lg">HISTORIAL DE CAMBIOS REALIZADOS</h3>
+  <table class="pt-5 ">
+    <thead class="">
+      <th class="p-1 bg-blue-500 text-white border border-white">N°</th>
+      <th class="p-1 bg-blue-500 text-white border border-white">origen</th>
+      <th class="p-1 bg-blue-500 text-white border border-white">monto</th>
+      <th class="p-1 bg-blue-500 text-white border border-white">tasa</th>
+      <th class="p-1 bg-blue-500 text-white border border-white">monto</th>
+      <th class="p-1 bg-blue-500 text-white border border-white">destino</th>
+      <th class="p-1 bg-blue-500 text-white border border-white">fecha</th>
+      <th class="p-1 bg-blue-500 text-white border border-white">usuario</th>
+      <th class="p-1 bg-blue-500 text-white border border-white">correo</th>
+      <th class="p-1 bg-blue-500 text-white border border-white">nombre</th>
+      <th class="p-1 bg-blue-500 text-white border border-white">apellidos</th>
+      <th class="p-1 bg-blue-500 text-white border border-white">activo</th>
+      <th class="p-1 bg-blue-500 text-white border border-white">roles</th>
     </thead>
+    <tbody>
+      <tr *ngFor="let exchangeHistory of exchangesHistory;let indx=index;">
+        <td>{{ indx + 1 }}</td>
+        <td>{{ exchangeHistory.originCurrency.name }}</td>
+        <td>{{ exchangeHistory.originAmount }}</td>
+        <td>{{ exchangeHistory.exchangeRate }}</td>
+        <td>{{ exchangeHistory.destinyAmount }}</td>
+        <td>{{ exchangeHistory.destinyCurrency.name }}</td>
+        <td>{{ exchangeHistory.operationDate | date }}</td>
+        <td>{{ exchangeHistory?.user?.username }}</td>
+        <td>{{ exchangeHistory?.user?.email }}</td>
+        <td>{{ exchangeHistory?.user?.name }}</td>
+        <td>{{ exchangeHistory?.user?.lastName }}</td>
+        <td>{{ exchangeHistory?.user?.enabled? 'Si': 'No' }}</td>
+        <td>{{ exchangeHistory?.user?.roles?.join(', ') }}</td>
+      </tr>
+    </tbody>
 
   </table>
 </div>
