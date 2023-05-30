@@ -1,3 +1,4 @@
+import { AuthService } from './../service/auth.service';
 import { ExchangeHistoryService } from './../service/exchange-history.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ExchangeTypeResponse } from '../model/exchange-type-response';
@@ -46,7 +47,8 @@ export class ExchangeTypeComponent {
     private formBuilder: FormBuilder,
     private exchangeTypeService: ExchangeTypeService,
     private exchangeHistoryService: ExchangeHistoryService,
-    private currencyService: CurrencyService
+    private currencyService: CurrencyService,
+    public authService :AuthService
     ){ }
 
   ngOnInit(){

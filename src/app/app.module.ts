@@ -9,7 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SessionComponent } from './session/session.component';
 import { ExchangeTypeComponent } from './exchange-type/exchange-type.component';
 import { ExchangeHistoryComponent } from './exchange-history/exchange-history.component';
-import { JWT_OPTIONS, JwtHelperService, JwtInterceptor, JwtModule } from '@auth0/angular-jwt';
+import { JWT_OPTIONS, JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { CustomJwtInterceptor } from './http-interceptors/custom-jwt-interceptor';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -38,7 +39,7 @@ export function tokenGetter() {
     ReactiveFormsModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: CustomJwtInterceptor, multi: true},
     {provide:JWT_OPTIONS, useValue:JWT_OPTIONS},
     JwtHelperService
   ],

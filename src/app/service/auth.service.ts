@@ -34,17 +34,9 @@ export class AuthService {
         (response: AuthResponse) => {
           localStorage.removeItem('access_token')
           localStorage.setItem('access_token', response.access_token)
-          if ( !this.isTokenValid() )
-          {
-              console.log(!this.isTokenValid());
 
-            return
-          }
-          let decodedToken = this.jwtHelperService.decodeToken(this.getLocalToken())
-          this.appUser = new AppUser
-          this.appUser.username = decodedToken.sub
-          this.appUser.roles = decodedToken.roles
-          this.appUser.isSessionActive = true
+          this.loadUserfromToken()
+
           this.onSuccessAuth()
 
         })
@@ -64,6 +56,16 @@ export class AuthService {
           !this.jwtHelperService.isTokenExpired( this.getLocalToken())
   }
 
-
+  loadUserfromToken() :void {
+    if ( !this.isTokenValid() )
+    {
+      return
+    }
+    let decodedToken = this.jwtHelperService.decodeToken(this.getLocalToken())
+    this.appUser = new AppUser
+    this.appUser.username = decodedToken.sub
+    this.appUser.roles = decodedToken.roles
+    this.appUser.hasSession = true
+  }
 
 }
