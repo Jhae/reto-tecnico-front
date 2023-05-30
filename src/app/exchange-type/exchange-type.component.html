@@ -30,8 +30,9 @@
           <option *ngFor="let currency of currencies" value="{{ currency.id }}" >[{{ currency.countriesNames.join(', ') }}] {{ currency.name }}</option>
         </select>
       </div>
-      <div class="mt-2 grid grid-cols-3">
-        <button class=" col-span-1 col-start-2 mt-2 block border-b-2 rounded p-2 bg-teal-400" (click)="createExchangeType()">Agregar</button>
+      <div class="mt-2 grid grid-cols-4 gap-x-2">
+        <button class=" col-span-2 border-b-2 rounded p-2 bg-teal-400" (click)="createExchangeType()">Agregar</button>
+        <button class=" col-span-2 border-b-2 rounded p-2 bg-red-600" (click)="cancelCreateExchangeType()">Cancelar</button>
       </div>
     </form>
   </div>
@@ -50,15 +51,15 @@
   <table class="mx-auto text-center ">
     <thead>
       <th class="px-2 py-1">N°</th>
-      <th class="px-2 py-1">Tasa</th>
       <th class="px-2 py-1">Origen</th>
+      <th class="px-2 py-1">Tasa</th>
       <th class="px-2 py-1">Destino</th>
     </thead>
     <tbody>
       <tr *ngFor="let exchangeType of exchangeTypes; let indx=index;">
         <td class="px-10 py-1">{{indx + 1}}</td>
         <td class="px-10 py-1">{{exchangeType?.originCurrency?.name ?? '-'}}</td>
-        <td class="px-10 py-1">{{exchangeType?.rate}}</td>
+        <td class="px-10 py-1">x {{exchangeType?.rate}}</td>
         <td class="px-10 py-1">{{exchangeType?.destinyCurrency?.name ?? '-'}}</td>
         <td class="px-10 py-1" *ngIf="authService.appUser.hasSession && authService.appUser.isUser()">
           <button class=" border-b-2 rounded p-2 bg-yellow-300" (click)="prepareExchangeCurrency(exchangeType.id)">Cambiar moneda</button>

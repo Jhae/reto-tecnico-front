@@ -128,6 +128,12 @@ export class ExchangeTypeComponent {
             }
           )
   }
+
+  cancelCreateExchangeType() :void {
+    this.createForm.reset()
+    this.displayCreateExchange = false
+  }
+
   createExchangeType() :void {
     let originCurrencyId = this.createForm.get('originCurrencyId')?.value?? ''
     let rate = this.createForm.get('rate')?.value?? 0 as number

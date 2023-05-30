@@ -1,4 +1,4 @@
-<div >
+<div class=" border-b-2 border-l-2 rounded-lg">
 
   <div *ngIf="!authService.appUser.hasSession" class="flex min-h-full flex-col justify-center px-2 py-2 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -62,7 +62,7 @@
       </p>
     </div>
   </div>
-
+</div>
   <!--div>
     <form *ngIf="!authService.appUser.hasSession"  [formGroup]="authForm">
       <input type="text" formControlName="username" name="username">
@@ -75,5 +75,5 @@
     <div><span>{{ authService.appUser.username }}</span></div>
     <div><span>{{ authService.appUser.roles.join(', ') }}</span></div>
     <button (click)="doLogOut()">Cerrar Sesión</button>
-  </div>
-</div-->
+  </div-->
+
