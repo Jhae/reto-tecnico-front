@@ -2,24 +2,37 @@
   <div class="">
     <h3 class="text-center font-bold text-lg">TIPOS DE CAMBIO DISPONIBLES</h3>
 
-  <div class="pt-5"><button (click)="prepareCreateExchangeType()" *ngIf="authService.appUser.hasSession && authService.appUser.isAdmin()">Agregar Tipo de Cambio</button></div>
+  <div class="pt-5">
+    <button class="border-b-2 rounded p-2 bg-green-500" (click)="prepareCreateExchangeType()" *ngIf="authService.appUser.hasSession && authService.appUser.isAdmin()">Agregar Tipo de Cambio</button>
+  </div>
+<!--FORM CREAR TIPO DE CAMBIO-->
+  <div *ngIf="displayCreateExchange && authService.appUser.hasSession && authService.appUser.isAdmin()"
+        class="flex flex-row justify-center ">
+    <form class="border-2 rounded p-4" [formGroup]="createForm" >
+      <div>
+        <p class="font-bold text-center">EDICIÓN DE TIPO DE CAMBIO</p>
+      </div>
+      <div class="mt-2 grid grid-cols-3">
+        <label class="col-span-1">Moneda Origen</label>
+        <select class="col-span-2" name="originCurrency" id="" formControlName="originCurrencyId">
+          <option *ngFor="let currency of currencies" value="{{ currency.id }}" >[{{ currency.countriesNames.join(', ') }}] {{ currency.name }}</option>
+        </select>
+      </div>
 
-  <div *ngIf="displayCreateExchange && authService.appUser.hasSession && authService.appUser.isAdmin()">
-    <form [formGroup]="createForm" >
-      <label for="">Moneda Origen</label>
-      <select name="originCurrency" id="" formControlName="originCurrencyId">
-        <option *ngFor="let currency of currencies" value="{{ currency.id }}" >[{{ currency.countriesNames.join(', ') }}] {{ currency.name }}</option>
-      </select>
+      <div class="mt-2 grid grid-cols-3">
+        <label for="col-span-1">Tasa: </label>
+        <input class="border-2 col-span-2" type="number" formControlName="rate">
+      </div>
 
-      <label for="">Tasa: </label>
-      <input type="number" formControlName="rate">
-
-      <label for="">Moneda Destino</label>
-      <select name="destinyCurrency" id="" formControlName="destinyCurrencyId">
-        <option *ngFor="let currency of currencies" value="{{ currency.id }}" >[{{ currency.countriesNames.join(', ') }}] {{ currency.name }}</option>
-      </select>
-
-      <button (click)="createExchangeType()">Agregar</button>
+      <div class="mt-2 grid grid-cols-3">
+        <label class="col-span-1">Moneda Destino</label>
+        <select class="col-span-2" name="destinyCurrency" id="" formControlName="destinyCurrencyId">
+          <option *ngFor="let currency of currencies" value="{{ currency.id }}" >[{{ currency.countriesNames.join(', ') }}] {{ currency.name }}</option>
+        </select>
+      </div>
+      <div class="mt-2 grid grid-cols-3">
+        <button class=" col-span-1 col-start-2 mt-2 block border-b-2 rounded p-2 bg-teal-400" (click)="createExchangeType()">Agregar</button>
+      </div>
     </form>
   </div>
 
@@ -36,7 +49,7 @@
 
   <table class="mx-auto text-center ">
     <thead>
-      <th class="px-2 py-1">ID</th>
+      <th class="px-2 py-1">N°</th>
       <th class="px-2 py-1">Tasa</th>
       <th class="px-2 py-1">Origen</th>
       <th class="px-2 py-1">Destino</th>
@@ -47,27 +60,44 @@
         <td class="px-10 py-1">{{exchangeType?.originCurrency?.name ?? '-'}}</td>
         <td class="px-10 py-1">{{exchangeType?.rate}}</td>
         <td class="px-10 py-1">{{exchangeType?.destinyCurrency?.name ?? '-'}}</td>
-        <td class="px-10 py-1" *ngIf="authService.appUser.hasSession && authService.appUser.isUser()"><button (click)="prepareExchangeCurrency(exchangeType.id)">Cambiar moneda</button></td>
-        <td class="px-10 py-1" *ngIf="authService.appUser.hasSession && authService.appUser.isAdmin()"><button (click)="prepareEditExchangeType(exchangeType.id)">Editar</button></td>
-        <td class="px-10 py-1" *ngIf="authService.appUser.hasSession && authService.appUser.isAdmin()"><button (click)="removeExchangeType(exchangeType.id)">Eliminar</button></td>
+        <td class="px-10 py-1" *ngIf="authService.appUser.hasSession && authService.appUser.isUser()">
+          <button class=" border-b-2 rounded p-2 bg-yellow-300" (click)="prepareExchangeCurrency(exchangeType.id)">Cambiar moneda</button>
+        </td>
+        <td class="px-10 py-1" *ngIf="authService.appUser.hasSession && authService.appUser.isAdmin()">
+          <button class="border-b-2 rounded p-2 bg-orange-400 " (click)="prepareEditExchangeType(exchangeType.id)">Editar</button>
+        </td>
+        <td class="px-10 py-1" *ngIf="authService.appUser.hasSession && authService.appUser.isAdmin()">
+          <button class="border-b-2 rounded p-2 bg-red-500" (click)="removeExchangeType(exchangeType.id)">Eliminar</button>
+        </td>
       </tr>
     </tbody>
   </table>
 
-
-  <div *ngIf="displayEditExchange && authService.appUser.hasSession && authService.appUser.isAdmin()">
-    <form [formGroup]="editForm">
+  <!--FORM EDICION DE TIPO DE CAMBIO-->
+  <div *ngIf="displayEditExchange && authService.appUser.hasSession && authService.appUser.isAdmin()"
+        class="flex flex-row justify-center w-full">
+    <form class=" mx-auto border-2 rounded p-4 " [formGroup]="editForm">
       <input type="hidden" formControlName="id">
-      <span>origen</span>
-      <div>{{exchangeTypeToEdit.originCurrency.name}}</div>
+      <div>
+        <div>
+          <p class="font-bold">EDICIÓN DE TIPO DE CAMBIO</p>
+        </div>
+        <span>Origen: </span>
+        <span>{{exchangeTypeToEdit.originCurrency.name}}</span>
+      </div>
 
       <label for="">Tasa: </label>
-      <input type="number" formControlName="rate">
+      <input class="border-2" type="number" formControlName="rate">
 
-      <span>destino</span>
-      <div>{{exchangeTypeToEdit.destinyCurrency.name}}</div>
-      <button (click)="updateExchangeType()">Actualzar</button>
-      <button (click)="cancelExchangeType()">Cancelar</button>
+      <div>
+        <span>Destino: </span>
+        <span>{{exchangeTypeToEdit.destinyCurrency.name}}</span>
+      </div>
+
+      <div class="">
+        <button class="border-b-2 rounded p-2 bg-green-500" (click)="updateExchangeType()">Actualzar</button>
+        <button class="border-b-2 rounded p-2 bg-red-500 ml-2" (click)="cancelExchangeType()">Cancelar</button>
+      </div>
     </form>
   </div>
 
